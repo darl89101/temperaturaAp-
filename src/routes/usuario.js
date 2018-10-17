@@ -1,5 +1,8 @@
 let express = require('express');
-let Temperatura = require('../models/temperatura');
+let bcrypt = require('bcryptjs');
+
+let Usuario = require('../models/usuario');
+var mdAutenticacion = require('../middlewares/authentication');
 
 let app = express();
 
@@ -7,16 +10,11 @@ let app = express();
 // Consulta los valores de temperatura
 // =================================================
 app.get('/', (req, res) => {
-    Temperatura.findAll({
-        order: [
-            ['id', 'DESC']
-        ],
-        limit: 20
-    }).then(temperaturas => {
+    Usuario.findAll().then(usuarios => {
         res.status(200).json({
             ok: true,
-            temperaturas
-        });
+            usuarios
+        })
     }).catch(e => {
         res.status(500).json({
             ok: false,
@@ -26,15 +24,16 @@ app.get('/', (req, res) => {
 });
 
 // =================================================
-// Guarda un valor de temperatura
+// Guarda un usuario
 // =================================================
 app.post('/', (req, res) => {
     let body = req.body;
 
-    Temperatura.create({
-            valor: body.valor,
-            fecha: new Date(),
-            usuario: 1
+    Usuario.create({
+            nombre: body.nombre,
+            email: body.email,
+            password: bcrypt.hashSync(body.password, 10), // bcrypt.genSaltSync(10),
+            role: body.role
         })
         .then((temp) => {
             res.status(200).json({
@@ -47,7 +46,6 @@ app.post('/', (req, res) => {
                 err: e
             })
         })
-
 
 });
 
