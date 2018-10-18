@@ -75,10 +75,10 @@ function obtenermenu(ROLE) {
         icono: 'mdi mdi-gauge',
         submenu: [
             { titulo: 'Dashboard', url: '/dashboard' },
-            { titulo: 'Progressbar', url: '/progress' },
-            { titulo: 'Gráficas', url: '/graficas1' },
-            { titulo: 'Promesas', url: '/promesas' },
-            { titulo: 'RxJs', url: '/rxjs' }
+            // { titulo: 'Progressbar', url: '/progress' },
+            // { titulo: 'Gráficas', url: '/graficas1' },
+            // { titulo: 'Promesas', url: '/promesas' },
+            // { titulo: 'RxJs', url: '/rxjs' }
         ]
     }, {
         titulo: 'Mantenimientos',
