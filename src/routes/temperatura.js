@@ -1,5 +1,7 @@
 let express = require('express');
 let Temperatura = require('../models/temperatura');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 let app = express();
 
@@ -7,7 +9,25 @@ let app = express();
 // Consulta los valores de temperatura
 // =================================================
 app.get('/', (req, res) => {
+    let fini = req.query.fini;
+    let ffin = req.query.ffin;
+    let where;
+    if (fini && fini !== 'undefined') {
+        where = {
+            createdAt: {
+                [Op.gte]: fini
+            }
+        };
+        if (ffin && ffin !== 'undefined') {
+            where = {
+                createdAt: {
+                    [Op.between]: [fini, ffin]
+                }
+            };
+        }
+    }
     Temperatura.findAll({
+        where: where,
         order: [
             ['id', 'DESC']
         ],
