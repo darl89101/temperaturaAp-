@@ -11,6 +11,8 @@ let app = express();
 app.get('/', (req, res) => {
     let fini = req.query.fini;
     let ffin = req.query.ffin;
+    let limit = req.query.limit;
+    console.log(req.query);
     let where;
     if (fini && fini !== 'undefined') {
         where = {
@@ -26,12 +28,16 @@ app.get('/', (req, res) => {
             };
         }
     }
+    if (!limit || limit === 'undefined') {
+        limit = 20;
+    }
+    limit = Number(limit);
     Temperatura.findAll({
         where: where,
         order: [
             ['id', 'DESC']
         ],
-        limit: 20
+        limit: limit
     }).then(temperaturas => {
         res.status(200).json({
             ok: true,

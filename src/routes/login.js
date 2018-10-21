@@ -75,6 +75,7 @@ function obtenermenu(ROLE) {
         icono: 'mdi mdi-gauge',
         submenu: [
             { titulo: 'Dashboard', url: '/dashboard' },
+            { titulo: 'Historial', url: '/historial' },
             // { titulo: 'Progressbar', url: '/progress' },
             // { titulo: 'Gráficas', url: '/graficas1' },
             // { titulo: 'Promesas', url: '/promesas' },
