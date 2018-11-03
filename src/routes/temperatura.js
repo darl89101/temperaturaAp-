@@ -1,9 +1,19 @@
 let express = require('express');
 let Temperatura = require('../models/temperatura');
 const Sequelize = require('sequelize');
+let nodemailer = require('nodemailer');
+
 const Op = Sequelize.Op;
 
 let app = express();
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'darl.8910@gmail.com',
+        pass: 'darl8910'
+    }
+});
 
 // =================================================
 // Consulta los valores de temperatura
@@ -57,6 +67,23 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     let body = req.body;
 
+    if (Number(body.valor) > 20) {
+        var mailOptions = {
+            from: 'darl.8910@gmail.com',
+            to: 'darl_8910@hotmail.com',
+            subject: 'Alerta Temperatura',
+            text: 'Temperatura registrada: ' + body.valor
+        };
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+        // return;
+    }
+
     Temperatura.create({
             valor: body.valor,
             fecha: new Date(),
@@ -74,7 +101,20 @@ app.post('/', (req, res) => {
             })
         })
 
-
 });
+
+// function buscarTemperatura() {
+//     return new Promise((resolve, reject) => {
+//         Hospital.find({ nombre: regex })
+//             .populate('usuario', 'nombre email')
+//             .exec((err, hospitales) => {
+//                 if (err) {
+//                     reject('Error al cargar hospitales', err);
+//                 } else {
+//                     resolve(hospitales);
+//                 }
+//             });
+//     });
+// }
 
 module.exports = app;

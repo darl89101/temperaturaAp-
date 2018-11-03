@@ -41,8 +41,6 @@ io.on('connection', function(socket) {
 let Temperatura = require('./src/models/temperatura');
 server.listen(process.env.PORT, () => {
     console.log('Express server escuchando en el puerto 3000: \x1b[32m%s\x1b[0m', 'conectado');
-
-
     // setInterval(() => {
     //     Temperatura.create({
     //             valor: Math.floor((Math.random() * 100) + 1),
