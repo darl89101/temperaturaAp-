@@ -28,15 +28,21 @@ app.get('/', (req, res) => {
         where = {
             createdAt: {
                 [Op.gte]: fini
-            }
+            },
+            sensor: req.query.sensor
         };
         if (ffin && ffin !== 'undefined') {
             where = {
                 createdAt: {
                     [Op.between]: [fini, ffin]
-                }
+                },
+                sensor: req.query.sensor
             };
         }
+    } else {
+        where = {
+            sensor: req.query.sensor
+        };
     }
     if (!limit || limit === 'undefined') {
         limit = 20;
@@ -87,7 +93,8 @@ app.post('/', (req, res) => {
     Temperatura.create({
             valor: body.valor,
             fecha: new Date(),
-            usuario: 1
+            usuario: 1,
+            sensor: body.sensor
         })
         .then((temp) => {
             res.status(200).json({
