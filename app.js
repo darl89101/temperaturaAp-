@@ -25,11 +25,13 @@ let tempRoute = require('./src/routes/temperatura');
 let usuarioRoute = require('./src/routes/usuario');
 let loginRoutes = require('./src/routes/login');
 let imagenesRoutes = require('./src/routes/imagenes');
+let parametrosRoutes = require('./src/routes/parametros');
 
 app.use('/login', loginRoutes);
 app.use('/temp', tempRoute);
 app.use('/usuario', usuarioRoute);
 app.use('/img', imagenesRoutes);
+app.use('/parametros', parametrosRoutes);
 
 let io = socketIO(server);
 io.on('connection', function(socket) {
